@@ -12,7 +12,7 @@ IMPLICIT NONE
 
 INTEGER(KIND=8) :: nn(6) = (/ 100,1000,5000,10000,1000000,10000000 /), i, n
 INTEGER(KIND=4) :: ii
-REAL(KIND=8) :: a, b, x, integral, h
+REAL(KIND=16) :: a, b, x, integral, h
 a = -2.0
 b = 2.0
 

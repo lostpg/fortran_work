@@ -6,7 +6,7 @@ DO i=1,2,1
   DO j=1,2,1 
     DO k=1,2,1 
       DO l=1,2,1 
-        WRITE(*,'(A,I1,I1,I1,I1,3X,I2)') 'at ',l,k,j,i,a(l,k,j,i)
+        WRITE(*,'(A,4I1,1X,I2,2X,4I1,1X,I2)') 'at',l,k,j,i,a(l,k,j,i),i,j,k,l,a(i,j,k,l)
       END DO
     END DO
   END DO

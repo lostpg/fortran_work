@@ -30,7 +30,7 @@ DO m=2,n*n,1
 END DO
 DO q=1,n,1
   DO p=1,n,1
-    WRITE(*,'(1X,I2)',advance='no') a(q,p)
+    WRITE(*,'(1X,I3)',advance='no') a(q,p)
   END DO
   WRITE(*,*) ""
 END DO

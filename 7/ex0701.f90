@@ -34,4 +34,5 @@ DO q=1,n,1
   END DO
   WRITE(*,*) ""
 END DO
+DEALLOCATE(a)
 END

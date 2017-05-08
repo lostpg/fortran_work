@@ -1,10 +1,12 @@
 SUBROUTINE my_son(mat,n)
 ! Gauss elimination
 ! to change a matrix to an uppeeeeeeeeer triangular one.
-! zero_judge: when a column is all-zero, jump to the next column
+! zero_judge: when elements in a column that are under the upper triangle are all-zero,
+! jump to the next column.
 ! swap,l: when a diagonal element is zero, swap this raw with another 
 !         raw whose corresponding element not zero.
-! swap_time: times doing the raw-swap.
+! swap_time: times doing the raw-swap. A swap means a minor sign multiplied to
+! matrix.???? (maybe)
 IMPLICIT NONE
 INTEGER :: n, i, j, k, l, swap, all_zero, swap_time=0
 REAL :: mat(n,n), c, zero_judge
@@ -53,6 +55,9 @@ IF (n==0) THEN
   mat_input = (/ 1,5,9,13,2,6,10,14,3,7,11,15,4,8,12,16 /)
   GOTO 10
 END IF
+
+! generate a seed and some random number then multiply and floor them
+! use them as matrix element
 IF (n==-1) THEN
   n = 4
   ALLOCATE(mat(n,n))
@@ -82,7 +87,7 @@ CALL my_son(mat,n)
 
 DO q=1,n,1
   DO p=1,n,1
-    WRITE(*,'(1X,F7.3)',advance='no') mat(q,p)
+    WRITE(*,'(1X,F8.3)',advance='no') mat(q,p)
   END DO
   WRITE(*,*) ""
 END DO

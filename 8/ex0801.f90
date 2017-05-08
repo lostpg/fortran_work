@@ -39,16 +39,44 @@ END SUBROUTINE
 PROGRAM EX0801
 IMPLICIT NONE
 INTEGER :: n=4
-INTEGER :: p, q
-REAL :: mat(4,4)=(/ 1,5,9,13,2,6,10,14,3,7,11,15,4,8,12,16 /)
+INTEGER :: p, q, i
+REAL, ALLOCATABLE :: mat(:,:), mat_input(:)
+REAL :: rand
+WRITE(*,'(A,/,A)') 'Input dim of a matrix, 0 for a fixed sample of 4*4,',&
+                &'and -1 for a random sample of 4*4:'
+READ(*,*) n
 
+IF (n==0) THEN
+  n = 4
+  ALLOCATE(mat(n,n))
+  ALLOCATE(mat_input(n*n))
+  mat_input = (/ 1,5,9,13,2,6,10,14,3,7,11,15,4,8,12,16 /)
+  GOTO 10
+END IF
+IF (n==-1) THEN
+  n = 4
+  ALLOCATE(mat(n,n))
+  ALLOCATE(mat_input(n*n))
+  CALL RANDOM_SEED()
+  DO i=1,n*n
+    CALL RANDOM_NUMBER(rand)
+    mat_input(i) = FLOOR(20 * rand)
+  END DO
+  GOTO 10
+END IF
+
+ALLOCATE(mat(n,n))
+ALLOCATE(mat_input(n*n))
+WRITE(*,'(A,I2,A)')'Then input ', n*n,' numbers.'
+READ(*,*)(mat_input(i),i=1,n*n)
+10    mat = RESHAPE(mat_input,(/n,n/))
 DO q=1,n,1
   DO p=1,n,1
     WRITE(*,'(1X,F7.3)',advance='no') mat(q,p)
   END DO
   WRITE(*,*) ""
 END DO
-WRITE(*,*) "Output"
+WRITE(*,'(A)') "Output"
 
 CALL my_son(mat,n)
 
@@ -58,4 +86,6 @@ DO q=1,n,1
   END DO
   WRITE(*,*) ""
 END DO
+DEALLOCATE(mat)
+DEALLOCATE(mat_input)
 END PROGRAM

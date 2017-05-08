@@ -1,4 +1,4 @@
-SUBROUTINE gauss_elimination(mat,n)
+SUBROUTINE my_son(mat,n)
 ! Gauss elimination
 ! to change a matrix to an uppeeeeeeeeer triangular one.
 ! zero_judge: when a column is all-zero, jump to the next column
@@ -50,7 +50,7 @@ DO q=1,n,1
 END DO
 WRITE(*,*) "Output"
 
-CALL gauss_elimination(mat,n)
+CALL my_son(mat,n)
 
 DO q=1,n,1
   DO p=1,n,1

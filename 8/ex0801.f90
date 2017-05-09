@@ -9,7 +9,9 @@ SUBROUTINE my_son(mat,n)
 ! matrix.???? (maybe)
 IMPLICIT NONE
 INTEGER :: n, i, j, k, l, swap, all_zero, swap_time=0
-REAL :: mat(n,n), c, zero_judge
+REAL :: mat(n,n), c, zero_judge, mat_swap(n,n)
+mat_swap = RESHAPE((/(0,swap=1,n*n)/),(/n,n/))
+FORALL(swap=1:n) mat_swap(swap,swap) = 1
 DO i=1, n-1
   zero_judge = 0
   DO all_zero=i+1,n
@@ -23,16 +25,29 @@ DO i=1, n-1
     END DO
     IF (l/=i) THEN
       swap_time = swap_time + 1
-      DO swap=1,n
-        c = mat(i,swap)
-        mat(i,swap) = mat(l,swap)
-        mat(l,swap) = c
-      END DO
+!      Swap two raws.
+!      DO swap=1,n
+!        c = mat(i,swap)
+!        mat(i,swap) = mat(l,swap)
+!        mat(l,swap) = c
+!      END DO
+!      A new way to swap to raws?
+      mat_swap(i,i) = 0
+      mat_swap(l,l) = 0
+      mat_swap(i,l) = 1
+      mat_swap(l,i) = 1
+      mat = matmul(mat,mat_swap)
+      mat_swap(i,i) = 1 
+      mat_swap(l,l) = 1
+      mat_swap(i,l) = 0
+      mat_swap(l,i) = 0
     END IF
     c = mat(j,i) / mat(i,i)
-    DO k=i,n
-      mat(j,k) = mat(j,k) - c * mat(i,k)
-    END DO
+!    DO k=i,n
+!      mat(j,k) = mat(j,k) - c * mat(i,k)
+!    END DO
+    ! use implicit cycle! We eliminate the k!
+    mat(j,i:n) = mat(j,i:n) - c * mat(i,i:n)
   END DO
 END DO
 IF (MOD(swap_time, 2) == 1) mat = -mat
@@ -66,20 +81,16 @@ DO i=1,n*n
 END DO
 
 10    mat = RESHAPE(mat_input,(/n,n/))
-DO q=1,n,1
-  DO p=1,n,1
-    WRITE(*,'(1X,F7.3)',advance='no') mat(q,p)
-  END DO
+DO q=1,n 
+  WRITE(*,'(20(1X,F8.3))',advance='no') (mat(q,p),p=1,n)
   WRITE(*,*) ""
 END DO
-WRITE(*,'(A)') "Output"
 
 CALL my_son(mat,n)
 
-DO q=1,n,1
-  DO p=1,n,1
-    WRITE(*,'(1X,F8.3)',advance='no') mat(q,p)
-  END DO
+WRITE(*,'(A)') "Output"
+DO q=1,n
+  WRITE(*,'(20(1X,F8.3))',advance='no') (mat(q,p),p=1,n)
   WRITE(*,*) ""
 END DO
 DEALLOCATE(mat)

@@ -35,17 +35,20 @@ DO i=1, n-1
     END DO
   END DO
 END DO
-IF (MOD(swap_time, 2) == 1) mat = -mat
+! IF (MOD(swap_time, 2) == 1) mat = -mat
 END SUBROUTINE
 
 PROGRAM EX0801
 IMPLICIT NONE
-INTEGER :: n=4
+CHARACTER(LEN=128) :: arg
+INTEGER :: n
 INTEGER :: p, q, i
 REAL, ALLOCATABLE :: mat(:,:), mat_input(:)
 REAL :: rand
-WRITE(*,'(A)',ADVANCE='no') 'Input dim of a matrix, 0 for a fixed sample of 4*4: '
-READ(*,*) n
+
+! WRITE(*,'(A,/,A)') 'Input length of a matrix, 0 for a fixed sample of 4*4:'
+CALL GETARG(1,arg)
+READ(arg,'(I2)')n
 
 IF (n==0) THEN
   n = 4
@@ -64,6 +67,7 @@ DO i=1,n*n
   CALL RANDOM_NUMBER(rand)
   mat_input(i) = FLOOR(20 * rand)
 END DO
+GOTO 10
 
 10    mat = RESHAPE(mat_input,(/n,n/))
 DO q=1,n,1

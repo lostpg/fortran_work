@@ -34,7 +34,7 @@ DO i=1, n-1
     mat(j,i:n) = mat(j,i:n) - c * mat(i,i:n)
   END DO
 END DO
-IF (MOD(swap_time, 2) == 1) mat = -mat
+! IF (MOD(swap_time, 2) == 1) mat = -mat
 END SUBROUTINE
 
 PROGRAM EX0801

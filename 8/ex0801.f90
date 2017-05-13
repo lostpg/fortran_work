@@ -13,7 +13,8 @@ REAL :: mat(n,n), c, zero_judge
 DO i=1, n-1
   zero_judge = 0.0
   DO all_zero=i+1,n
-    zero_judge = zero_judge +  mat(all_zero,i)
+    IF (mat(all_zero,i)/=0) zero_judge = zero_judge + 1
+    IF (zero_judge/=0) EXIT
   END DO
   IF (zero_judge == 0) CYCLE
   DO j=i+1,n

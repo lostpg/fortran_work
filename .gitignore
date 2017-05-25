@@ -11,5 +11,7 @@
 /.ssh/
 /.viminfo
 /.zshrc
-
+*.o
+*.mod
+*.out
 

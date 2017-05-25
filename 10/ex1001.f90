@@ -63,7 +63,7 @@ DO tik=1,loop2
 END DO
 CALL CPU_TIME(time_stop)
 CLOSE(8)
-WRITE(*,FMT=100)'time use: ',time_start-time_stop,', average: ',sum_bin/loop2,'.'
+WRITE(*,FMT=100)'time use: ',-(time_start-time_stop),', average: ',sum_bin/loop2,'.'
 100 FORMAT(A,F10.7,A,F17.14,A)
 
 WRITE(*,'(A)')'Handling formatted file...'
@@ -78,6 +78,6 @@ DO tik=1,loop2
 END DO
 CALL CPU_TIME(time_stop)
 CLOSE(9)
-WRITE(*,FMT=100)'time use: ', time_start-time_stop,', average: ',sum_dec/loop2,'.'
+WRITE(*,FMT=100)'time use: ', -(time_start-time_stop),', average: ',sum_dec/loop2,'.'
 
 END

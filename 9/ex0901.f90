@@ -1,11 +1,4 @@
-! TODO: implement function overloading: use different data type on the basis of data type of inputting 'n'
-! example: input: 10000, using REAL(KIND=4)
-!          input: 10000_8, using REAL(KIND=8)
 MODULE WTF
-  IMPLICIT NONE
-  INTERFACE my_son
-  MODULE PROCEDURE my_son_4, my_son_8
-  END INTERFACE
 CONTAINS
   SUBROUTINE init_random_seed()
     INTEGER :: i, n, clock
@@ -19,8 +12,7 @@ CONTAINS
   END SUBROUTINE init_random_seed
   SUBROUTINE my_son_4(n)
     IMPLICIT NONE
-    REAL :: n
-    INTEGER ::  i, inside
+    INTEGER ::  i, inside, n
     REAL(KIND=4) :: a(2), prob
     inside = 0
     prob = 0.0
@@ -34,8 +26,8 @@ CONTAINS
   END SUBROUTINE
   SUBROUTINE my_son_8(n)
     IMPLICIT NONE
-    INTEGER ::  i, inside
-    REAL(KIND=8) :: a(2), prob, n
+    INTEGER ::  i, inside, n
+    REAL(KIND=8) :: a(2), prob
     inside = 0
     prob = 0.0
     CALL init_random_seed()
@@ -55,8 +47,8 @@ INTEGER(KIND=4) :: type,n
 type = 4
 READ(*,*)type, n
 IF (type==4) THEN
-  CALL my_son(FLOAT(n))
+  CALL my_son_4(n)
 ELSE IF (type==8) THEN
-  CALL my_son(DBLE(n))
+  CALL my_son_8(n)
 END IF
 END

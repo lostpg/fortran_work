@@ -1,0 +1,5 @@
+PROGRAM EX0302
+COMPLEX :: C
+C = (1.0, 2.1)
+WRITE(*,*) c
+END

@@ -1,22 +1,24 @@
-obj = ex1001.o 
+ex=1001
+ex_=ex$(ex)
+obj = $(ex_).o 
 ifor=$(shell which ifort)
 .PHONY: mr clean e r
 ifneq ($(ifor),)
 1001: $(obj)
-	ifort -o 1001 ex1001.o 
-$(obj): ex1001.f90
-	ifort ex1001.f90 -c
+	ifort -o $(ex) $(ex_) .o 
+$(obj): $(ex_).f90
+	ifort $(ex_).f90 -c
 else
-1001: $(obj)
-	gfortran -o 1001 ex1001.o 
-$(obj): ex1001.f90
-	gfortran ex1001.f90 -c
+$(ex): $(obj)
+	gfortran -o $(ex) $(ex_).o 
+$(obj): $(ex_).f90
+	gfortran $(ex_).f90 -c
 endif
 r:
-	-@make && ./1001
+	-@make && ./$(ex)
 clean:
-	-@rm ./1001
+	-@rm ./$(ex)
 	-@rm *.o
 	-@rm data.* result.txt
 e:
-	@vim ex1001.f90
+	@vim $(ex_).f90

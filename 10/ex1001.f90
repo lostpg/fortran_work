@@ -27,9 +27,9 @@ INQUIRE(FILE='data.dat',exist=bin)
 sum_dec = 0.0
 sum_bin = 0.0
 
-IF (bin .EQV. .FALSE.) THEN
+IF (.NOT. .FALSE.) THEN
   WRITE(*,'(A)')'Unformatted data file doesn''t exist! Creating...'
-  OPEN(UNIT=8,FILE='data.dat',STATUS='NEW',FORM='UNFORMATTED',&
+  OPEN(UNIT=8,FILE='data.dat',STATUS='REPLACE',FORM='UNFORMATTED',&
 &      ACCESS='DIRECT',RECL=data_len)
   DO tik=1,loop
     CALL random_number(get_num)
@@ -39,9 +39,9 @@ IF (bin .EQV. .FALSE.) THEN
   WRITE(*,'(A)')'data.dat created!'
 END IF
 
-IF (dec .EQV. .FALSE.) THEN
+IF ( .NOT. .FALSE.) THEN
   WRITE(*,'(A)')'Formatted data file doesn''t exist! Creating...'
-  OPEN(UNIT=9,FILE='data.txt',STATUS='NEW',FORM='FORMATTED',&
+  OPEN(UNIT=9,FILE='data.txt',STATUS='REPLACE',FORM='FORMATTED',&
        ACCESS='DIRECT',RECL=20)
   DO tik=1,loop
     CALL random_number(get_num)
@@ -63,10 +63,12 @@ DO tik=1,loop2
 END DO
 CALL CPU_TIME(time_stop)
 CLOSE(8)
-OPEN(UNIT=8,FILE='data.dat',STATUS='OLD',FORM='UNFORMATTED',&
-&    ACCESS='DIRECT',RECL=data_len)
-WRITE(UNIT=8,REC=loop+1) sum_bin/loop2
-WRITE(UNIT=8,REC=loop+2) time_stop-time_start
+OPEN(UNIT=9,FILE='result.txt',STATUS='REPLACE',FORM='FORMATTED',&
+&    ACCESS='DIRECT',RECL=70)
+
+WRITE(UNIT=9,FMT='(A,F17.14,A1,A1)',REC=1)'Unformatted file: average:',sum_bin/loop2,b'00001101',b'00001010'
+WRITE(UNIT=9,FMT='(A,F17.14,A1,A1)',REC=2)'cost:',time_stop-time_start,b'00001101',b'00001010'
+
 CLOSE(8)
 WRITE(*,FMT=100)'time use: ',-(time_start-time_stop),', average: ',sum_bin/loop2,'.'
 100 FORMAT(A,F10.7,A,F17.14,A)
@@ -83,10 +85,10 @@ DO tik=1,loop2
 END DO
 CALL CPU_TIME(time_stop)
 CLOSE(9)
-OPEN(UNIT=9,FILE='data.txt',STATUS='OLD',FORM='FORMATTED',&
-&    ACCESS='DIRECT',RECL=20)
-WRITE(UNIT=9,FMT='(F17.14,A1,A1)',REC=loop+1) sum_dec/loop2,b'00001101',b'00001010'
-WRITE(UNIT=9,FMT='(F17.14,A1,A1)',REC=loop+2) time_stop-time_start,b'00001101',b'00001010'
+OPEN(UNIT=9,FILE='result.txt',STATUS='OLD',FORM='FORMATTED',&
+&    ACCESS='DIRECT',RECL=70)
+WRITE(UNIT=9,FMT='(A,F17.14,A1,A1)',REC=3)'Formatted file: average:', sum_dec/loop2,b'00001101',b'00001010'
+WRITE(UNIT=9,FMT='(A,F17.14,A1,A1)',REC=4)'cost:', time_stop-time_start,b'00001101',b'00001010'
 CLOSE(9)
 WRITE(*,FMT=100)'time use: ', -(time_start-time_stop),', average: ',sum_dec/loop2,'.'
 

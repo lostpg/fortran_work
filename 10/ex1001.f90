@@ -16,8 +16,8 @@ LOGICAL :: bin, dec
 REAL(KIND=4) :: time_start, time_stop, position_
 REAL(KIND=8) :: sum_bin, sum_dec, get_num
 CHARACTER :: cr,lf
-loop=100000
-loop2=200000
+loop=500000
+loop2=1000000
 INQUIRE(IOLENGTH=data_len) get_num
 CALL init_random_seed()
 
@@ -28,7 +28,7 @@ sum_dec = 0.0
 sum_bin = 0.0
 
 IF (.NOT. .FALSE.) THEN
-  WRITE(*,'(A)')'Unformatted data file doesn''t exist! Creating...'
+  WRITE(*,'(A)')'Unformatted data file is being created...'
   OPEN(UNIT=8,FILE='data.dat',STATUS='REPLACE',FORM='UNFORMATTED',&
 &      ACCESS='DIRECT',RECL=data_len)
   DO tik=1,loop
@@ -40,7 +40,7 @@ IF (.NOT. .FALSE.) THEN
 END IF
 
 IF ( .NOT. .FALSE.) THEN
-  WRITE(*,'(A)')'Formatted data file doesn''t exist! Creating...'
+  WRITE(*,'(A)')'Formatted data file is being created...'
   OPEN(UNIT=9,FILE='data.txt',STATUS='REPLACE',FORM='FORMATTED',&
        ACCESS='DIRECT',RECL=20)
   DO tik=1,loop

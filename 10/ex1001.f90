@@ -40,7 +40,11 @@ IF (.NOT. .FALSE.) THEN
 END IF
 
 IF ( .NOT. .FALSE.) THEN
+<<<<<<< HEAD
+  WRITE(*,'(A)')'Formatted data file if being created'
+=======
   WRITE(*,'(A)')'Formatted data file is being created...'
+>>>>>>> d837f5aed9adf0302a37fb291d74527999578a0f
   OPEN(UNIT=9,FILE='data.txt',STATUS='REPLACE',FORM='FORMATTED',&
        ACCESS='DIRECT',RECL=20)
   DO tik=1,loop

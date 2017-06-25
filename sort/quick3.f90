@@ -25,16 +25,10 @@ do k = lo+1,hi
     end if
   else if ( a(k)==x ) then 
     j = j + 1
-    if ( j/=k ) then
-      swp = a(j)
-      a(j) = a(k)
-      a(k) = swp
-    end if
     i = i + 1
-    if ( i/=j ) then
-      swp = a(j)
+    if ( j/=k ) then
+      a(k) = a(j)
       a(j) = a(i)
-      a(i) = swp
     end if
   end if
 end do

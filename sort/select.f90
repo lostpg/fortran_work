@@ -5,7 +5,7 @@ integer :: a(n)
 do i=1,n-1
   key = i
   do j=i+1,n
-    if (a(key) > a(j)) key = j
+    if (a(j) < a(key)) key = j
   end do
   if (key /= i) then
     temp = a(key)
